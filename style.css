@@ -1,0 +1,30 @@
+.board-container {
+  display: grid;
+  width: 350px;
+  height: 350px;
+  grid-template-columns: repeat(10, 1fr);
+  background-color: lightcoral;
+}
+
+.ship-container {
+  display: grid;
+  width: 350px;
+  height: 125px;
+  background-color: lightskyblue;
+}
+
+.aircraftCarrier {
+  background-color: rgb(200, 102, 186);
+}
+
+.destroyer {
+  background-color: aquamarine;
+}
+
+.submarine {
+  background-color: bisque;
+}
+
+.cruiser {
+  background-color: lightpink;
+}
