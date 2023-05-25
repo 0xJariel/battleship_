@@ -1,20 +1,24 @@
-// import { Ship } from "./Ship";
+export const renderShips = (shipList) => {
+  const shipContainer = document.createElement("div");
+  shipContainer.classList.add("ship-container");
+  app.appendChild(shipContainer);
 
-// export const renderShips = (() => {
-//   const aircraftCarrier = Ship("aircraftCarrier", 5);
-//   const destroyer = Ship("destroyer", 4);
-//   const submarine = Ship("submarine", 3);
-//   const cruiser = Ship("cruiser", 2);
-//   const shipList = [aircraftCarrier, destroyer, submarine, cruiser];
+  shipList.forEach((displayShip) => {
+    // event.dataTransfer.setData("text/plain", "Hello, World!");
 
-//   const node = document.querySelector(".ship-container");
+    let newShipRender = document.createElement("div");
+    newShipRender.classList.add("ship", displayShip.name);
+    newShipRender.dataset.ship_size = displayShip.size;
+    newShipRender.setAttribute("draggable", "true");
+    newShipRender.style.width = `${35 * displayShip.size}px`;
+    newShipRender.style.height = "35px";
 
-//   shipList.forEach((ship) => {
-//     let shipElement = document.createElement("div");
-//     shipElement.style.width = `${ship.length * 35}px`;
-//     shipElement.classList.add(`${ship.name}`);
-//     shipElement.classList.add("dragShip");
-//     shipElement.setAttribute("draggable", "true");
-//     node.appendChild(shipElement);
-//   });
-// })();
+    newShipRender.addEventListener("dragstart", (e) => {
+      const data = { name: displayShip.name, size: displayShip.size };
+      const dataString = JSON.stringify(data);
+      e.dataTransfer.setData("application/json", dataString);
+    });
+
+    shipContainer.appendChild(newShipRender);
+  });
+};

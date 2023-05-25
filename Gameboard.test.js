@@ -34,14 +34,28 @@ describe("#GameBoard", () => {
 
   test("placeShip accross the x axis by length", () => {
     testBoard.placeShip(testShip, 1, 1);
+
     expect(testBoard.board[0].fill).toEqual(testBoard.board[1].fill);
     expect(testBoard.board[1].fill).toEqual(testShip.name);
     expect(testBoard.board[2].fill).toEqual(testShip.name);
+  });
+
+  test("placeShip outside the box", () => {
+    let result = testBoard.placeShip(testShip, 21, 1);
+    expect(result).toEqual(null);
+  });
+
+  test("placeShip on top of another ship", () => {
+    testBoard.placeShip(testShip, 5, 3);
+    testBoard.placeShip(testShip, 5, 3);
+    expect(null).toEqual(null);
   });
 
   test("print board", () => {
     testBoard.printBoard();
   });
 
-  test("");
+  test("hit ship", () => {
+    expect;
+  });
 });

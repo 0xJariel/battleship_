@@ -2,10 +2,10 @@ export const Ship = (a, b) => {
   let name = a;
   let size = b;
   let hits = 0;
-  let coordinates = [];
+  let coords = [];
 
   const isSunk = () => {
-    hits >= size ? true : false;
+    return hits >= size ? true : false;
   };
 
   const hit = () => {
@@ -13,5 +13,5 @@ export const Ship = (a, b) => {
     return hits;
   };
 
-  return { name, size, isSunk, hit, hits, coordinates };
+  return { name, size, isSunk, hit, hits, coords };
 };

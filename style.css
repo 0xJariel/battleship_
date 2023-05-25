@@ -6,11 +6,19 @@
   background-color: lightcoral;
 }
 
+.tile:hover {
+  background-color: red;
+}
+
 .ship-container {
   display: grid;
   width: 350px;
-  height: 125px;
+  /* height: 125px; */
   background-color: lightskyblue;
+}
+
+.dingy {
+  background-color: goldenrod;
 }
 
 .aircraftCarrier {

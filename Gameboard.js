@@ -25,19 +25,26 @@ export const Gameboard = () => {
     }
   };
 
-  const findShip = () => {
-    shipsOnBoard.forEach((ship) => {});
+  const findShip = (x, y) => {
+    for (const ship of shipsOnBoard) {
+      for (const coord of ship.coords) {
+        if (coord.x === x && coord.y === y) {
+          return ship;
+        }
+      }
+    }
+    console.log(shipsOnBoard[0].coords);
+    return null; // Return null or undefined if no matching ship is found
   };
 
   const receiveAttack = (x, y) => {
-    //check if theres a ship
-    //call hit function on ship
     //determine if the ship is destroyed
     //check if all ships are now destroyed
     let tile = findTile(x, y);
     //change this to account to work with any ship
-    if (tile.fill == "submarine") {
-      //find ship based on x, y and deploy its own method
+    if (tile.fill !== "water") {
+      let currentShip = findShip(x, y);
+      currentShip.hit();
       tile.fill = "Hit!";
       return "Hit!";
     } else {
@@ -51,26 +58,37 @@ export const Gameboard = () => {
     return nextTile;
   };
 
-  const onBoardShip = (newsShip) => {};
-
-  const verifyPlacement = () => {};
-
-  //using the start position and then adding by ship length
-  const placeShip = (ship, x, y) => {
-    // let locationList = [];
-    let newShip = ship;
-    shipsOnBoard.push(newShip);
-
-    let location = findTile(x, y);
-    location.fill = ship;
-
-    //add the ship to adjecent tiles
+  const validCoords = (ship, x, y) => {
+    let coords = [];
     for (let i = 0; i < ship.size; i++) {
-      let currentTile = findNextTile(x, y, i);
-      // locationList.push(findNextTile(x, y, i));
-      currentTile.fill = ship.name;
-      //needs to be a reference to this object so i can call its functions
+      coords.push({ x, y: y + i });
+
+      //checks if the tile does not exits or has anything other than water
+      if (findTile(x, y + i) == null || findTile(x, y + i).fill !== "water") {
+        return false;
+      }
     }
+    return coords;
+  };
+
+  const placeShip = (ship, x, y) => {
+    if (validCoords(ship, x, y)) {
+      let currentShip = ship;
+      //makes each ship unique
+      currentShip.coords = validCoords(ship, x, y);
+      //adds the new ship to it's own place outside the board
+      shipsOnBoard.push(currentShip);
+
+      let location = findTile(x, y);
+      location.fill = ship.name;
+      shipsOnBoard.push(ship);
+
+      for (let i = 0; i < ship.size; i++) {
+        let currentTile = findNextTile(x, y, i);
+        currentTile.fill = ship.name;
+      }
+    }
+    return null;
   };
 
   const printBoard = () => {
